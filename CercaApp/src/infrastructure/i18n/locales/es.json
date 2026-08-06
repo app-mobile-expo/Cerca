@@ -1,0 +1,69 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "retry": "Intentar de nuevo",
+    "back": "Volver",
+    "cancel": "Cancelar",
+    "continue": "Continuar"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Iniciar sesión",
+      "subtitle": "Encuentra servicios locales cerca de ti.",
+      "submit": "Ingresar",
+      "createAccount": "Crear una cuenta"
+    },
+    "signUp": {
+      "title": "Crear cuenta",
+      "subtitle": "Únete a Cerca y encuentra servicios en tu zona.",
+      "hasAccount": "Ya tengo una cuenta"
+    }
+  },
+  "search": {
+    "title": "Buscar servicios",
+    "pending": "Esta funcionalidad se desarrollará en la US-02."
+  },
+  "listings": {
+    "mine": "Mis anuncios",
+    "create": "Publicar servicio",
+    "minePending": "Esta funcionalidad se desarrollará en las historias de anuncios.",
+    "createPending": "El formulario de cuatro pasos se desarrollará en la US-03."
+  },
+  "bookings": {
+    "request": {
+      "title": "Solicitar una reserva",
+      "subtitle": "Envía una solicitud al proveedor. Él confirmará la fecha.",
+      "cta": "Solicitar reserva"
+    },
+    "confirmation": {
+      "title": "Solicitud enviada",
+      "subtitle": "Avisamos al proveedor. Verás el estado aquí en cuanto responda.",
+      "viewDetail": "Ver reserva"
+    },
+    "detail": {
+      "title": "Reserva",
+      "listing": "Servicio"
+    },
+    "status": {
+      "requested": "Solicitada",
+      "accepted": "Aceptada",
+      "declined": "Rechazada",
+      "completed": "Completada",
+      "cancelled": "Cancelada"
+    },
+    "blocked": {
+      "cannot_book_own_listing": "No puedes reservar tu propio anuncio."
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Página no encontrada",
+      "goHome": "Volver al inicio"
+    },
+    "network": "No pudimos conectarnos. Revisa tu conexión e inténtalo de nuevo.",
+    "forbidden": "No tienes permiso para hacer esto.",
+    "server": "Algo salió mal de nuestro lado. Inténtalo de nuevo.",
+    "generic": "Algo salió mal. Inténtalo de nuevo.",
+    "unauthenticated": "Inicia sesión para continuar."
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "retry": "Try again",
+    "back": "Back",
+    "cancel": "Cancel",
+    "continue": "Continue"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Find local services near you.",
+      "submit": "Sign in",
+      "createAccount": "Create an account"
+    },
+    "signUp": {
+      "title": "Create account",
+      "subtitle": "Join Cerca and find services in your area.",
+      "hasAccount": "I already have an account"
+    }
+  },
+  "search": {
+    "title": "Search services",
+    "pending": "This feature will be developed in US-02."
+  },
+  "listings": {
+    "mine": "My listings",
+    "create": "Publish service",
+    "minePending": "This feature will be developed in the listing stories.",
+    "createPending": "The four-step form will be developed in US-03."
+  },
+  "bookings": {
+    "request": {
+      "title": "Request a booking",
+      "subtitle": "Send a request to the provider. They will confirm the date.",
+      "cta": "Request booking"
+    },
+    "confirmation": {
+      "title": "Request sent",
+      "subtitle": "We let the provider know. You'll see the status here once they respond.",
+      "viewDetail": "View booking"
+    },
+    "detail": {
+      "title": "Booking",
+      "listing": "Service"
+    },
+    "status": {
+      "requested": "Requested",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "blocked": {
+      "cannot_book_own_listing": "You can't book your own listing."
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "goHome": "Go to home"
+    },
+    "network": "We couldn't connect. Check your internet connection and try again.",
+    "forbidden": "You don't have permission to do this.",
+    "server": "Something went wrong on our side. Please try again.",
+    "generic": "Something went wrong. Please try again.",
+    "unauthenticated": "Sign in to continue."
+  }
+}
