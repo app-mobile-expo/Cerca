@@ -1,8 +1,10 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import type { BookingId } from '@/domain/bookings/booking';
+import { canReviewBooking } from '@/domain/reviews/review.policy';
+import { useAuth } from '@/presentation/auth/providers/auth-provider';
 import { ScreenContainer } from '@/presentation/shared/components/screen-container';
 
 import { BookingStatusBadge } from '../components/booking-status-badge';
@@ -13,6 +15,7 @@ import { getBookingErrorMessageKey } from '../utils/booking-error-message';
 // porque la clave bookingKeys.detail(id) es la misma que invalida la mutación de solicitud
 export function BookingDetailScreen() {
   const { t } = useTranslation();
+  const { actor } = useAuth();
   const { id } = useLocalSearchParams<{ id: BookingId }>();
   const { data: booking, isLoading, isError, error, refetch } = useBooking(id);
 
@@ -40,6 +43,10 @@ export function BookingDetailScreen() {
     );
   }
 
+  // review:write lo tienen todos los actores (customer/provider/moderator/admin), así que el botón nunca se oculta:
+  // se deshabilita y explica el motivo exacto cuando la relación, el estado, la unicidad o el plazo lo bloquean
+  const eligibility = actor ? canReviewBooking(actor.id, booking, new Date()) : null;
+
   return (
     <ScreenContainer>
       <Text style={styles.title}>{t('bookings.detail.title')}</Text>
@@ -50,6 +57,27 @@ export function BookingDetailScreen() {
         <Text style={styles.label}>{t('bookings.detail.listing')}</Text>
         <Text style={styles.value}>{booking.listingId}</Text>
       </View>
+
+      {eligibility ? (
+        <View style={styles.reviewSection}>
+          {!eligibility.ok ? (
+            <Text style={styles.message}>{t(`review.blocked.${eligibility.reason}`)}</Text>
+          ) : null}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ disabled: !eligibility.ok }}
+            disabled={!eligibility.ok}
+            style={({ pressed }) => [
+              styles.reviewButton,
+              !eligibility.ok && styles.reviewButtonDisabled,
+              pressed && eligibility.ok && styles.reviewButtonPressed,
+            ]}
+            onPress={() => router.push(`/bookings/${booking.id}/review`)}
+          >
+            <Text style={styles.reviewButtonText}>{t('review.cta')}</Text>
+          </Pressable>
+        </View>
+      ) : null}
     </ScreenContainer>
   );
 }
@@ -74,6 +102,33 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  reviewSection: {
+    marginTop: 24,
+  },
+  message: {
+    marginBottom: 12,
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#92400E',
+  },
+  reviewButton: {
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: '#111827',
+  },
+  reviewButtonPressed: {
+    opacity: 0.8,
+  },
+  reviewButtonDisabled: {
+    backgroundColor: '#9CA3AF',
+  },
+  reviewButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   errorMessage: {
     marginBottom: 16,

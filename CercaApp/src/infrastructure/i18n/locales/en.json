@@ -55,6 +55,31 @@
       "cannot_book_own_listing": "You can't book your own listing."
     }
   },
+  "review": {
+    "cta": "Write a review",
+    "title": "Review this booking",
+    "subtitle": "Share how the service went. Other customers will see this.",
+    "rating": {
+      "starLabel": "Star {{starNumber}} of 5"
+    },
+    "comment": {
+      "placeholder": "What went well? What could improve?"
+    },
+    "submit": {
+      "cta": "Submit review"
+    },
+    "validation": {
+      "ratingRequired": "Choose a rating from 1 to 5 stars.",
+      "commentTooShort": "Your comment needs at least 10 characters.",
+      "commentTooLong": "Your comment is too long."
+    },
+    "blocked": {
+      "not_your_booking": "You can only review bookings you requested.",
+      "not_completed": "You can only review a completed booking.",
+      "already_reviewed": "You already reviewed this booking.",
+      "window_closed": "The 30-day window to review this booking has closed."
+    }
+  },
   "errors": {
     "notFound": {
       "title": "Page not found",
