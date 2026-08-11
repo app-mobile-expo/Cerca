@@ -1,6 +1,10 @@
-import { LoginForm } from './src/presentation/components/auth/LoginForm/LoginForm';
+import { NavigationContainer } from "@react-navigation/native";
+import { AppNavigator } from "./src/presentation/navigation/AppNavigator";
 
 export default function App() {
-  
-   return <LoginForm />;
+  return (
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
+  );
 }
