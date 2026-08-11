@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Button } from './src/presentation/components/Button/Button';
 
 export default function App() {
+
+  const handlePress = () =>{
+     console.log("ola")
+  }
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+        <Button title='Press' onPress={handlePress}></Button>
     </View>
   );
 }
