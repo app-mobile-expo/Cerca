@@ -1,7 +1,9 @@
 import { useLogin } from "../../../hooks/useLogin";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet} from "react-native";
+import { router } from "expo-router";
+
 
 
 export const LoginForm = () => {
@@ -12,7 +14,7 @@ export const LoginForm = () => {
         <View style={styles.container}>
 
             <View style={styles.form}>
-                
+
                 <Input
                     label="Email"
                     value={email}
@@ -31,6 +33,12 @@ export const LoginForm = () => {
                     title="Login"
                     onPress={handleLogin}
                 />
+
+                 <Button
+                    title="Don't you have an account?"
+                    onPress={() => router.push("/register")}
+                />
+
             </View>
 
         </View>
