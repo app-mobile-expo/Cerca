@@ -2,64 +2,72 @@ import { Text, View, StyleSheet } from "react-native";
 import { useLogin } from "../../../hooks/useForm";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../navigation/types/RootStackParamList";
 
 
 export const LoginForm = () => {
-  const { email, password, setEmail, setPassword, handleLogin, error} = useLogin();
+    
+    type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.form}>
-        <Input
-          label="Email"
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email@example.com"
-        />
+    const navigation = useNavigation<NavigationProp>();
 
-        <Input
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          placeholder="********"
-        />
+    const { email, password, setEmail, setPassword, handleLogin, error } = useLogin();
 
-        {error ? (
-          <Text style={styles.error}>
-            {error}
-          </Text>
-        ) : null}
+    return (
+        <View style={styles.container}>
+            <View style={styles.form}>
+                <Input
+                    label="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Email@example.com"
+                />
 
-        <Button
-          title="Login"
-          onPress={handleLogin}
-        />
+                <Input
+                    label="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="********"
+                />
 
-        <Button
-        
-          title="Don't you have an account?"
-          onPress={() => {
-           navigation.navigate("Register")
-          }}
-        />
-      </View>
-    </View>
-  );
+                {error ? (
+                    <Text style={styles.error}>
+                        {error}
+                    </Text>
+                ) : null}
+
+                <Button
+                    title="Login"
+                    onPress={handleLogin}
+                />
+
+                <Button
+
+                    title="Don't you have an account?"
+                    onPress={() => {
+                        navigation.navigate("Register")
+                    }}
+                />
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-  form: {
-    width: "100%",
-    maxWidth: 400,
-    alignSelf: "center",
-    gap: 16,
-  },
-  error: {
-    color: "red",
-  },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        padding: 20,
+    },
+    form: {
+        width: "100%",
+        maxWidth: 400,
+        alignSelf: "center",
+        gap: 16,
+    },
+    error: {
+        color: "red",
+    },
 });
