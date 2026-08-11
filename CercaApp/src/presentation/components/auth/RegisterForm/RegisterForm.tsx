@@ -3,7 +3,7 @@ import { useLogin } from "../../../hooks/useForm";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const { email, password, setEmail, setPassword, handleLogin, error} = useLogin();
 
   return (
@@ -22,6 +22,12 @@ export const LoginForm = () => {
           onChangeText={setPassword}
           placeholder="********"
         />
+          <Input
+          label="Confirm password"
+          value={password}
+          onChangeText={setPassword}
+          placeholder="********"
+        />
 
         {error ? (
           <Text style={styles.error}>
@@ -30,14 +36,14 @@ export const LoginForm = () => {
         ) : null}
 
         <Button
-          title="Login"
+          title="Sign up"
           onPress={handleLogin}
         />
 
         <Button
           title="Don't you have an account?"
           onPress={() => {
-            // navegar al registro
+            // navegar al login
           }}
         />
       </View>
