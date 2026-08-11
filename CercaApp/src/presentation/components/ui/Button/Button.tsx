@@ -1,4 +1,4 @@
-import {ButtonProps} from './Button.type';
+import { ButtonProps } from './btn';
 import {Pressable, Text, StyleSheet} from 'react-native';
 
 
