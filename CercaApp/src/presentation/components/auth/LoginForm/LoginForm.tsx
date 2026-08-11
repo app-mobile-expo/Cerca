@@ -3,6 +3,7 @@ import { useLogin } from "../../../hooks/useForm";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
 
+
 export const LoginForm = () => {
   const { email, password, setEmail, setPassword, handleLogin, error} = useLogin();
 
@@ -35,9 +36,10 @@ export const LoginForm = () => {
         />
 
         <Button
+        
           title="Don't you have an account?"
           onPress={() => {
-            // navegar al registro
+           navigation.navigate("Register")
           }}
         />
       </View>

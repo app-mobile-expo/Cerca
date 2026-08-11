@@ -43,7 +43,7 @@ export const RegisterForm = () => {
         <Button
           title="Don't you have an account?"
           onPress={() => {
-            // navegar al login
+            navigation.navigate("Login")
           }}
         />
       </View>
