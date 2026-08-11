@@ -1,77 +1,113 @@
-import { Text, View, StyleSheet } from "react-native";
-import { useLogin } from "../../../hooks/useForm";
+import { StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  NativeStackNavigationProp,
+} from "@react-navigation/native-stack";
+
+import { useRegister } from "../../../hooks/useRegister";
+import { RootStackParamList } from "../../../navigation/types/RootStackParamList";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../navigation/types/RootStackParamList";
+
+type NavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
 
 export const RegisterForm = () => {
+  const navigation =
+    useNavigation<NavigationProp>();
 
-    type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  const {
+    displayName,
+    email,
+    password,
+    confirmPassword,
+    setDisplayName,
+    setEmail,
+    setPassword,
+    setConfirmPassword,
+    handleRegister,
+    error,
+    isLoading,
+  } = useRegister();
 
-    const navigation = useNavigation<NavigationProp>();
-    
-    const { email, password, setEmail, setPassword, handleLogin, error } = useLogin();
+  const onRegister = async () => {
+    const session = await handleRegister();
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.form}>
-                <Input
-                    label="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="Email@example.com"
-                />
+    if (!session) return;
 
-                <Input
-                    label="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholder="********"
-                />
-                <Input
-                    label="Confirm password"
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholder="********"
-                />
+    navigation.navigate("Login");
+  };
 
-                {error ? (
-                    <Text style={styles.error}>
-                        {error}
-                    </Text>
-                ) : null}
+  return (
+    <View style={styles.container}>
+      <View style={styles.form}>
+        <Input
+          label="Name"
+          value={displayName}
+          onChangeText={setDisplayName}
+          placeholder="Tu nombre"
+        />
 
-                <Button
-                    title="Sign up"
-                    onPress={handleLogin}
-                />
+        <Input
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email@example.com"
+        />
 
-                <Button
-                    title="Don't you have an account?"
-                    onPress={() => {
-                        navigation.navigate("Login")
-                    }}
-                />
-            </View>
-        </View>
-    );
+        <Input
+          label="Password"
+          value={password}
+          onChangeText={setPassword}
+          placeholder="********"
+        />
+
+        <Input
+          label="Confirm password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="********"
+        />
+
+        {error ? (
+          <Text style={styles.error}>
+            {error}
+          </Text>
+        ) : null}
+
+        <Button
+          title={
+            isLoading
+              ? "Creating account..."
+              : "Sign up"
+          }
+          onPress={onRegister}
+        />
+
+        <Button
+          title="Do you have an account?"
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
+        />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        padding: 20,
-    },
-    form: {
-        width: "100%",
-        maxWidth: 400,
-        alignSelf: "center",
-        gap: 16,
-    },
-    error: {
-        color: "red",
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  form: {
+    width: "100%",
+    maxWidth: 400,
+    alignSelf: "center",
+    gap: 16,
+  },
+  error: {
+    color: "red",
+  },
 });
