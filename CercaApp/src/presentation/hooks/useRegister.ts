@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import { signUpUseCase } from "@/application/use-cases/auth.use-cases";
-import { authRepository } from "@/infrastructure/api/auth/auth.repository";
+import { useAuth } from "@/presentation/context/AuthContext";
 
 export function useRegister() {
+  const { register } = useAuth();
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,26 +49,21 @@ export function useRegister() {
     return true;
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (): Promise<boolean> => {
     if (!validateRegister()) {
-      return null;
+      return false;
     }
 
     try {
       setIsLoading(true);
       setError("");
 
-      const session = await signUpUseCase(
-        authRepository,
-        {
-          displayName: displayName.trim(),
-          email: email.trim().toLowerCase(),
-          password,
-          capacities: ["customer"],
-        },
-      );
-
-      return session;
+      return register({
+        displayName: displayName.trim(),
+        email: email.trim().toLowerCase(),
+        password,
+        capacities: ["customer"],
+      });
     } catch (error) {
       console.error(
         "Registration error:",
@@ -79,7 +74,7 @@ export function useRegister() {
         "Could not create the account. Please try again.",
       );
 
-      return null;
+      return false;
     } finally {
       setIsLoading(false);
     }

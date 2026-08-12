@@ -9,12 +9,12 @@ import {
 import LoginScreen from "../screens/LoginForm/LoginForm";
 import RegisterScreen from "../screens/RegisterForm/RegisterForm";
 import SearchScreen from "../screens/SearchScreen/SearchScreen";
+import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 
 import { useAuth } from "../context/AuthContext";
-import type { RootStackParamList } from "./types/RootStackParamList";
+import type { RootStackParamList } from "@/types/navigation";
 
-const Stack =
-  createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => {
   const {
@@ -39,10 +39,18 @@ export const AppNavigator = () => {
   return (
     <Stack.Navigator>
       {session ? (
-        <Stack.Screen
-          name="Search"
-          component={SearchScreen}
-        />
+        <>
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ title: "Search services" }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{ title: "My profile" }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen

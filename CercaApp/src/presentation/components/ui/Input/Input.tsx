@@ -1,7 +1,7 @@
-import { InputProps } from "./ipt";
+import type { AppInputProps } from "@/types/ui";
 import { TextInput, Text, View, StyleSheet } from "react-native";
 
-export function Input({ label, value, onChangeText, placeholder, }: InputProps) {
+export function Input({ label, value, onChangeText, placeholder, }: AppInputProps) {
     return (
         <View style={styles.container}>
 

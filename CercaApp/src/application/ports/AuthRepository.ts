@@ -1,17 +1,10 @@
-import type { AuthSession } from "@/domain/entities/auth/AuthSession";
-import type { Capacity } from "@/domain/entities/auth/Actor";
+import type {
+  AuthSession,
+  SignInInput,
+  SignUpInput,
+} from "@/types/auth";
 
-export type SignInInput = {
-  email: string;
-  password: string;
-};
-
-export type SignUpInput = {
-  email: string;
-  password: string;
-  displayName: string;
-  capacities?: Capacity[];
-};
+export type { SignInInput, SignUpInput } from "@/types/auth";
 
 export interface AuthRepository {
   signIn(input: SignInInput): Promise<AuthSession>;

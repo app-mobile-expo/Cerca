@@ -4,7 +4,7 @@ import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../../../navigation/types/RootStackParamList";
+import type { RootStackParamList } from "@/types/navigation";
 
 
 export const LoginForm = () => {
