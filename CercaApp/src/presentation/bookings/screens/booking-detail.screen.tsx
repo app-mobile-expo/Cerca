@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { BookingId } from '@/domain/bookings/booking';
 import { canReviewBooking } from '@/domain/reviews/review.policy';
-import { useAuth } from '@/presentation/auth/providers/auth-provider';
+import { useAuth } from '@/presentation/context/AuthContext';
 import { ScreenContainer } from '@/presentation/shared/components/screen-container';
 
 import { BookingStatusBadge } from '../components/booking-status-badge';
@@ -15,7 +15,8 @@ import { getBookingErrorMessageKey } from '../utils/booking-error-message';
 // porque la clave bookingKeys.detail(id) es la misma que invalida la mutación de solicitud
 export function BookingDetailScreen() {
   const { t } = useTranslation();
-  const { actor } = useAuth();
+  const { session } = useAuth();
+  const actor = session?.actor;
   const { id } = useLocalSearchParams<{ id: BookingId }>();
   const { data: booking, isLoading, isError, error, refetch } = useBooking(id);
 
