@@ -3,10 +3,14 @@ import {
   Text,
   View,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { useAuth } from "@/presentation/context/AuthContext"; 
+import { useAuth } from "@/presentation/context/AuthContext";
+import type { RootStackParamList } from "@/types/navigation";
 
 export default function SearchScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {
     session,
     logout,
@@ -28,6 +32,13 @@ export default function SearchScreen() {
       <Text>
         User: {session?.actor.id}
       </Text>
+
+      <Button
+        title="My profile"
+        onPress={() => {
+          navigation.navigate("Profile");
+        }}
+      />
 
       <Button
         title="Sign out"

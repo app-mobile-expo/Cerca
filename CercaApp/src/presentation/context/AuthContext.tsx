@@ -6,11 +6,15 @@ import {
   useState,
 } from "react";
 
-import type { SignInInput } from "@/application/ports/AuthRepository";
+import type {
+  SignInInput,
+  SignUpInput,
+} from "@/types/auth";
 import {
   refreshSessionUseCase,
   signInUseCase,
   signOutUseCase,
+  signUpUseCase,
 } from "@/application/use-cases/auth.use-cases";
 import type { AuthSession } from "@/domain/entities/auth/AuthSession";
 import { authRepository } from "@/infrastructure/api/auth/auth.repository";
@@ -25,6 +29,9 @@ type AuthContextValue = {
   isInitializing: boolean;
   login: (
     input: SignInInput,
+  ) => Promise<boolean>;
+  register: (
+    input: SignUpInput,
   ) => Promise<boolean>;
   logout: () => Promise<void>;
 };
@@ -120,12 +127,27 @@ export function AuthProvider({
     }
   };
 
+  const register = async (
+    input: SignUpInput,
+  ): Promise<boolean> => {
+    try {
+      const newSession = await signUpUseCase(authRepository, input);
+      await saveSession(newSession);
+      setSession(newSession);
+      return true;
+    } catch (error) {
+      console.error("Registration error:", error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         session,
         isInitializing,
         login,
+        register,
         logout,
       }}
     >
