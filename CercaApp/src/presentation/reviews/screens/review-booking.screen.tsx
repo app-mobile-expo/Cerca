@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { BookingId } from '@/domain/bookings/booking';
 import { canReviewBooking } from '@/domain/reviews/review.policy';
-import { useAuth } from '@/presentation/auth/providers/auth-provider';
+import { useAuth } from '@/presentation/context/AuthContext';
 import { useBooking } from '@/presentation/bookings/hooks/use-booking';
 import { getBookingErrorMessageKey } from '@/presentation/bookings/utils/booking-error-message';
 import { ScreenContainer } from '@/presentation/shared/components/screen-container';
@@ -20,7 +20,8 @@ import { reviewFormSchema, type ReviewFormValues } from '../utils/review-form-sc
 // Pantalla para reseñar una reserva completada: vuelve a evaluar la política estrella aunque el enlace llegue directo
 export function ReviewBookingScreen() {
   const { t } = useTranslation();
-  const { actor } = useAuth();
+  const { session } = useAuth();
+  const actor = session?.actor;
   const { id } = useLocalSearchParams<{ id: BookingId }>();
   const { data: booking, isLoading, isError, error: bookingError, refetch } = useBooking(id);
   const { submitOnce, isPending, isError: isSubmitError, isSuccess, error: submitError } = useSubmitReview();
