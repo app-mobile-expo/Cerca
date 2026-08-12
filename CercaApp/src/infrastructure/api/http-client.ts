@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { sessionStorage } from '@/infrastructure/storage/secure-session-storage';
+import { getSession } from '@/infrastructure/storage/session.storage';
 
 import { ApiError, ApiNetworkError } from './api-error';
 
@@ -32,7 +32,7 @@ async function readProblem(response: Response): Promise<{ reason?: string; detai
 
 // Ejecuta una petición HTTP contra la API de Cerca: agrega el token de sesión, la Idempotency-Key y traduce errores
 async function request(path: string, options: RequestOptions): Promise<unknown> {
-  const session = await sessionStorage.read();
+  const session = await getSession();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',

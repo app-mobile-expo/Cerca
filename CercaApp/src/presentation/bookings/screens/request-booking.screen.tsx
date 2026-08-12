@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { canRequestBooking } from '@/domain/bookings/booking.policy';
-import { useAuth } from '@/presentation/auth/providers/auth-provider';
+import { useAuth } from '@/presentation/context/AuthContext';
 import { ScreenContainer } from '@/presentation/shared/components/screen-container';
 
 import { BookingRequestButton } from '../components/booking-request-button';
@@ -19,7 +19,8 @@ function readParam(value: string | string[] | undefined): string {
 // Pantalla para solicitar una reserva sobre un anuncio: valida "no es mi anuncio" y envía la solicitud una sola vez
 export function RequestBookingScreen() {
   const { t } = useTranslation();
-  const { actor } = useAuth();
+  const { session } = useAuth();
+  const actor = session?.actor;
   const params = useLocalSearchParams<{ listingId?: string; listingOwnerId?: string }>();
   const listingId = readParam(params.listingId);
   const listingOwnerId = readParam(params.listingOwnerId);
