@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { signUp } from "@/infrastructure/api/auth.service";
+import { signUpUseCase } from "@/application/use-cases/auth.use-cases";
+import { authRepository } from "@/infrastructure/api/auth/auth.repository";
 
 export function useRegister() {
   const [displayName, setDisplayName] = useState("");
@@ -57,14 +58,15 @@ export function useRegister() {
       setIsLoading(true);
       setError("");
 
-      const session = await signUp({
-        displayName: displayName.trim(),
-        email: email.trim().toLowerCase(),
-        password,
-        capacities: ["customer"],
-      });
-
-      console.log("Registration successful");
+      const session = await signUpUseCase(
+        authRepository,
+        {
+          displayName: displayName.trim(),
+          email: email.trim().toLowerCase(),
+          password,
+          capacities: ["customer"],
+        },
+      );
 
       return session;
     } catch (error) {

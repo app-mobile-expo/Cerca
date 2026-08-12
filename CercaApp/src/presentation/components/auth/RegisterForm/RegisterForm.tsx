@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native-stack";
 
 import { useRegister } from "../../../hooks/useRegister";
-import { RootStackParamList } from "../../../navigation/types/RootStackParamList";
+import type { RootStackParamList } from "../../../navigation/types/RootStackParamList";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
 
@@ -45,7 +45,7 @@ export const RegisterForm = () => {
           label="Name"
           value={displayName}
           onChangeText={setDisplayName}
-          placeholder="Tu nombre"
+          placeholder="Your name"
         />
 
         <Input

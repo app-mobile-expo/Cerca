@@ -1,8 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 
-import type { AuthSession } from "@/domain/entities/AuthSession";
-import { authSessionSchema } from "@/infrastructure/api/auth.schemas";
+import type { AuthSession } from "@/domain/entities/auth/AuthSession";
+import { authSessionSchema } from "@/infrastructure/api/schemas/auth.schema";
 
 const SESSION_KEY = "cerca.auth.session";
 
@@ -58,4 +58,3 @@ export async function clearSession(): Promise<void> {
     SESSION_KEY,
   );
 }
-

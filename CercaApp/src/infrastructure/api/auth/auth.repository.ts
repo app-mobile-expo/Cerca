@@ -1,22 +1,15 @@
-import type { AuthSession } from "@/domain/entities/AuthSession";
-import type { Capacity } from "@/domain/entities/Actor";
+import type { AuthRepository } from "@/application/ports/AuthRepository";
+import type {
+  SignInInput,
+  SignUpInput,
+} from "@/application/ports/AuthRepository";
+import type { AuthSession } from "@/domain/entities/auth/AuthSession";
 
-import { authSessionSchema } from "./auth.schemas";
-import { httpClient } from "./httpClient";
+import { authSessionSchema } from "@/infrastructure/api/schemas/auth.schema";
 
-export type SignInInput = {
-  email: string;
-  password: string;
-};
+import { httpClient } from "../http/httpClient";
 
-export type SignUpInput = {
-  email: string;
-  password: string;
-  displayName: string;
-  capacities?: Capacity[];
-};
-
-export async function signIn(
+async function signIn(
   input: SignInInput,
 ): Promise<AuthSession> {
   const response = await httpClient(
@@ -30,7 +23,7 @@ export async function signIn(
   return authSessionSchema.parse(response);
 }
 
-export async function signUp(
+async function signUp(
   input: SignUpInput,
 ): Promise<AuthSession> {
   const response = await httpClient(
@@ -45,7 +38,7 @@ export async function signUp(
 }
 
 
-export async function refreshSession(
+async function refreshSession(
   refreshToken: string,
 ): Promise<AuthSession> {
   const response = await httpClient(
@@ -61,7 +54,7 @@ export async function refreshSession(
   return authSessionSchema.parse(response);
 }
 
-export async function signOut(
+async function signOut(
   accessToken: string,
   refreshToken: string,
 ): Promise<void> {
@@ -76,3 +69,10 @@ export async function signOut(
     },
   );
 }
+
+export const authRepository: AuthRepository = {
+  signIn,
+  signUp,
+  refreshSession,
+  signOut,
+};
