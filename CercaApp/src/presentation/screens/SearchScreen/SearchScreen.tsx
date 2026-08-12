@@ -22,7 +22,7 @@ export default function SearchScreen() {
       }}
     >
       <Text>
-        Bienvenido a Cerca
+        Welcome to Cerca
       </Text>
 
       <Text>
@@ -30,7 +30,7 @@ export default function SearchScreen() {
       </Text>
 
       <Button
-        title="Cerrar sesión"
+        title="Sign out"
         onPress={() => {
           void logout();
         }}

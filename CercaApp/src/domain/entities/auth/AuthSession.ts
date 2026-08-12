@@ -1,4 +1,4 @@
-import type { Actor } from './Actor';
+import type { Actor } from "./Actor";
 
 export interface AuthSession {
   accessToken: string;
