@@ -8,7 +8,7 @@ import {
 
 import LoginScreen from "../screens/LoginForm/LoginForm";
 import RegisterScreen from "../screens/RegisterForm/RegisterForm";
-import SearchScreen from "../screens/SearchScreen/SearchScreen";
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 
 import { useAuth } from "../context/AuthContext";
@@ -41,9 +41,9 @@ export const AppNavigator = () => {
       {session ? (
         <>
           <Stack.Screen
-            name="Search"
-            component={SearchScreen}
-            options={{ title: "Search services" }}
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Profile"
