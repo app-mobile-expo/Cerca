@@ -6,11 +6,13 @@ import { formatMoney } from '../utils/format-money';
 
 type ListingCardProps = {
   readonly listing: Listing;
+  readonly categoryName?: string;
 };
 
-export function ListingCard({ listing }: ListingCardProps) {
+export function ListingCard({ listing, categoryName }: ListingCardProps) {
   return (
     <View style={styles.card}>
+      {categoryName ? <Text style={styles.category}>{categoryName}</Text> : null}
       <Text style={styles.title}>{listing.title}</Text>
       <Text style={styles.price}>{formatMoney(listing.priceFrom)}</Text>
       {listing.ratingCount > 0 ? (
@@ -29,7 +31,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: '#F9FAFB',
   },
+  category: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#6D28D9',
+    textTransform: 'uppercase',
+  },
   title: {
+    marginTop: 2,
     fontSize: 16,
     fontWeight: '600',
   },

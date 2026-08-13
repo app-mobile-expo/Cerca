@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+
+import { useCategories } from '@/presentation/categories/hooks/use-categories';
 
 import { ListingList } from '../components/listing-list';
 import { useListings } from '../hooks/use-listings';
@@ -24,8 +27,15 @@ export function ListingsScreen() {
     isFetchingNextPage,
     isRefetching,
   } = useListings(DEFAULT_FILTERS);
+  const { data: categories } = useCategories();
 
   const listings = data?.pages.flatMap((page) => page.items) ?? [];
+
+  // Si categories todavía no cargó (o falló), las cards simplemente no muestran el nombre — no bloquea el flujo principal
+  const categoriesById = useMemo(
+    () => Object.fromEntries((categories ?? []).map((category) => [category.id, category.name])),
+    [categories],
+  );
 
   if (isLoading) {
     return (
@@ -64,6 +74,7 @@ export function ListingsScreen() {
       <Text style={styles.title}>Servicios cerca de ti</Text>
       <ListingList
         listings={listings}
+        categoriesById={categoriesById}
         onEndReached={() => {
           if (hasNextPage && !isFetchingNextPage) {
             fetchNextPage();

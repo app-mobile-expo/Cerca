@@ -80,9 +80,29 @@ Al escribir los archivos a mano quedaron en rutas que no coincidían con lo acor
 
 **Gotcha real de git:** los primeros intentos de `git mv` fallaban con `fatal: no se encuentra bajo control de versiones` — no era un problema de la terminal cortando el pegado (parecía eso al principio), sino que `git mv` **exige que el archivo ya esté trackeado** (agregado al índice). Los archivos nuevos de este módulo estaban en `??` (untracked), así que había que usar `mv` normal del sistema — `git` los sigue viendo como nuevos en la ruta nueva sin problema. En cambio, los 4 stubs de Tomy sí estaban en `A` (ya en el índice, porque vinieron de `git checkout origin/feature/flatlist-card --`), así que para esos `git mv` funcionó directo y preservó el historial.
 
-### `src/application/categories/` — pendiente
+### `src/domain/categories/`
 
-### `src/infrastructure/api/` — pendiente (categories)
+- `category.ts` (nuevo) — entidad `Category`: `id`, `slug`, `name`. Alias `CategoryId` declarado localmente (mismo criterio que `ListingId` duplicado en `domain/bookings/booking.ts` y `domain/listings/listing.ts` — es el estilo que ya usa el proyecto: cada feature declara sus propios alias de id en vez de importarlos cruzados entre dominios).
+
+### `src/application/categories/`
+
+- `ports/category.repository.ts` (nuevo) — puerto `CategoryRepository` con un único método `listCategories(): Promise<readonly Category[]>`. Sin parámetros: `GET /v1/categories` no tiene query params.
+- `use-cases/list-categories.ts` (nuevo) — `createListCategoriesUseCase(repository)`, mismo patrón fábrica que el resto.
+
+### `src/infrastructure/api/category.gateway.ts`
+
+`CategoryApiGateway implements CategoryRepository`. La respuesta real es un **array directo** (sin wrapper `items`/`nextCursor` como listings), así que el schema de Zod es `z.array(categorySchema)` aplicado directo sobre `httpClient.get('/categories')`.
+
+### `src/presentation/categories/`
+
+- `hooks/category-keys.ts` (nuevo) — solo `all`/`lists()`, sin `list(id)` de detalle: no hay endpoint de categoría individual en alcance.
+- `hooks/use-categories.ts` (nuevo) — `useCategories()` con `useQuery` simple (no infinito): la API no pagina categorías (son ~40 fijas, sembradas por seed).
+
+**Integrado en Listings**, cerrando el gap que había quedado pendiente (`ListingCard` mostraba `categoryId` como uuid crudo, no el nombre):
+
+- `listings.screen.tsx` ahora también llama `useCategories()` y arma `categoriesById: Record<CategoryId, string>` con `useMemo`, **una sola vez a nivel de screen** (no en cada `ListingCard`, para no tener N suscripciones a la misma query dentro del `FlatList`).
+- Ese mapa baja como prop por `ListingList` → `ListingCard` (`categoryName?: string`), no como hook — se mantiene el mismo principio de todo el módulo: los componentes presentacionales no llaman hooks de datos.
+- Si `categories` todavía no cargó o falla, `categoriesById` queda `{}` y las cards simplemente no muestran el nombre — no bloquea ni rompe el flujo principal de listings, que es independiente.
 
 ### `src/presentation/listings/`
 
