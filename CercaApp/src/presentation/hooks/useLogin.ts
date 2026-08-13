@@ -3,9 +3,7 @@ import { useState } from "react";
 import { useAuth } from "@/presentation/context/AuthContext";
 
 export function useLogin() {
-  const {
-    login,
-  } = useAuth();
+const {login,} = useAuth();
 
   const [email, setEmail] =
     useState("");

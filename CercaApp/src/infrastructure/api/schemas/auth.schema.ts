@@ -10,7 +10,10 @@ export const actorSchema = z.object({
     'moderator',
     'admin',
   ]),
-});
+}).transform((actor) => ({
+  ...actor,
+  capacities: [...actor.capacities],
+}));
 
 export const authSessionSchema = z.object({
   accessToken: z.string().min(1),

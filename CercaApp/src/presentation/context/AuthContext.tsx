@@ -6,28 +6,32 @@ import {
   useState,
 } from "react";
 
-import type { AuthSession } from "@/domain/entities/AuthSession";
+import type {
+  SignInInput,
+  SignUpInput,
+} from "@/types/auth";
 import {
-  refreshSession,
-  signIn,
-  signOut,
-} from "@/infrastructure/api/auth.service";
+  refreshSessionUseCase,
+  signInUseCase,
+  signOutUseCase,
+  signUpUseCase,
+} from "@/application/use-cases/auth.use-cases";
+import type { AuthSession } from "@/domain/entities/auth/AuthSession";
+import { authRepository } from "@/infrastructure/api/auth/auth.repository";
 import {
   clearSession,
   getSession,
   saveSession,
 } from "@/infrastructure/storage/session.storage";
 
-type LoginInput = {
-  email: string;
-  password: string;
-};
-
 type AuthContextValue = {
   session: AuthSession | null;
   isInitializing: boolean;
   login: (
-    input: LoginInput,
+    input: SignInInput,
+  ) => Promise<boolean>;
+  register: (
+    input: SignUpInput,
   ) => Promise<boolean>;
   logout: () => Promise<void>;
 };
@@ -57,7 +61,8 @@ export function AuthProvider({
         }
 
         const newSession =
-          await refreshSession(
+          await refreshSessionUseCase(
+            authRepository,
             storedSession.refreshToken,
           );
 
@@ -81,17 +86,18 @@ export function AuthProvider({
   }, []);
 
   const login = async (
-    input: LoginInput,
+    input: SignInInput,
   ): Promise<boolean> => {
     try {
       const newSession =
-        await signIn(input);
+        await signInUseCase(
+          authRepository,
+          input,
+        );
 
       await saveSession(newSession);
 
       setSession(newSession);
-
-      console.log("Login successful");
 
       return true;
     } catch (error) {
@@ -104,9 +110,10 @@ export function AuthProvider({
   const logout = async (): Promise<void> => {
     try {
       if (session) {
-        await signOut(
-          session.refreshToken,
+        await signOutUseCase(
+          authRepository,
           session.accessToken,
+          session.refreshToken,
         );
       }
     } catch (error) {
@@ -120,12 +127,27 @@ export function AuthProvider({
     }
   };
 
+  const register = async (
+    input: SignUpInput,
+  ): Promise<boolean> => {
+    try {
+      const newSession = await signUpUseCase(authRepository, input);
+      await saveSession(newSession);
+      setSession(newSession);
+      return true;
+    } catch (error) {
+      console.error("Registration error:", error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         session,
         isInitializing,
         login,
+        register,
         logout,
       }}
     >

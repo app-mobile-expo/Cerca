@@ -1,8 +1,8 @@
-import { ButtonProps } from './btn';
+import type { AppButtonProps } from "@/types/ui";
 import {Pressable, Text, StyleSheet} from 'react-native';
 
 
-export const Button = ({onPress, title}: ButtonProps) => {
+export const Button = ({onPress, title}: AppButtonProps) => {
   return(
       <Pressable style={styles.button} onPress={onPress}>
            <Text style={styles.text}>{title}</Text>

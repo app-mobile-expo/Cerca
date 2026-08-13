@@ -1,4 +1,6 @@
-import { API_URL } from './config';
+import { API_URL } from "@/infrastructure/config/api.config";
+
+import { parseApiErrorBody } from "./ApiError";
 
 type HttpOptions = {
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -38,7 +40,7 @@ export async function httpClient(
     });
   } catch {
     throw new Error(
-      'No fue posible conectarse con el servidor',
+      "Could not connect to the server.",
     );
   }
 
@@ -47,10 +49,9 @@ export async function httpClient(
       .json()
       .catch(() => null);
 
-    console.error('API error:', errorBody);
-
-    throw new Error(
-      'La petición no pudo completarse',
+    throw parseApiErrorBody(
+      errorBody,
+      response.status,
     );
   }
 

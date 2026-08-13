@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useLogin } from "../../../hooks/useForm";
+import { useLogin } from "../../../hooks/useLogin";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../navigation/types/RootStackParamList";
+import type { RootStackParamList } from "@/types/navigation";
 
 
 export const LoginForm = () => {
