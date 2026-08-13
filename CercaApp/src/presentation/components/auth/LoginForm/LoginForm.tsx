@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useLogin } from "../../../hooks/useLogin";
 import { Button } from "../../ui/Button/Button";
 import { Input } from "../../ui/Input/Input";
@@ -16,7 +23,14 @@ export const LoginForm = () => {
     const { email, password, setEmail, setPassword, handleLogin, error } = useLogin();
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={styles.container}
+        >
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+          >
             <View style={styles.form}>
                 <Input
                     label="Email"
@@ -51,13 +65,18 @@ export const LoginForm = () => {
                     }}
                 />
             </View>
-        </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#F3F4F6",
+    },
+    scrollContent: {
+        flexGrow: 1,
         justifyContent: "center",
         padding: 20,
     },

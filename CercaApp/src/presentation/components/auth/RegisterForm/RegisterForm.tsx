@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
@@ -39,7 +46,14 @@ export const RegisterForm = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={styles.container}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
       <View style={styles.form}>
         <Input
           label="Name"
@@ -93,13 +107,18 @@ export const RegisterForm = () => {
           }}
         />
       </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F3F4F6",
+  },
+  scrollContent: {
+    flexGrow: 1,
     justifyContent: "center",
     padding: 20,
   },
