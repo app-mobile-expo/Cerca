@@ -1,11 +1,12 @@
 
-import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { LoginForm } from "../../components/auth/LoginForm/LoginForm";
 
 export default function LoginScreen() {
   return (
-    <View>
+    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
       <LoginForm />
-    </View>
+    </SafeAreaView>
   );
 }

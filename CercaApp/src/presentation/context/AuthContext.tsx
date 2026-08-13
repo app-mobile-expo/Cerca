@@ -15,7 +15,7 @@ import {
   signInUseCase,
   signOutUseCase,
   signUpUseCase,
-} from "@/application/use-cases/auth.use-cases";
+} from "@/application/use-cases/authUseCases";
 import type { AuthSession } from "@/domain/entities/auth/AuthSession";
 import { authRepository } from "@/infrastructure/api/auth/auth.repository";
 import {

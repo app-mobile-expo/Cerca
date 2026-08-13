@@ -1,17 +1,28 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { useAuth } from "@/presentation/context/AuthContext";
 import { Button } from "@/presentation/components/ui/Button/Button";
 import { Input } from "@/presentation/components/ui/Input/Input";
+import { RoleAccessPanel } from "@/presentation/components/access/RoleAccessPanel";
 import type { RootStackParamList } from "@/types/navigation";
 
 export function Home() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { logout } = useAuth();
+  const { logout, session } = useAuth();
   const [search, setSearch] = useState("");
+
+  if (!session) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -19,13 +30,23 @@ export function Home() {
         <View style={styles.navHeader}>
           <Text style={styles.brand}>Cerca</Text>
 
-          <Pressable accessibilityRole="button" onPress={() => navigation.navigate("Profile")} style={styles.navButton}>
-            <Text style={styles.navButtonText}>Profile</Text>
-          </Pressable>
+          <View style={styles.navActions}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => navigation.navigate("Profile")}
+              style={styles.navButton}
+            >
+              <Text style={styles.navButtonText}>Profile</Text>
+            </Pressable>
 
-          <Pressable accessibilityRole="button" onPress={() => { void logout(); }} style={styles.navButton}>
-            <Text style={styles.navButtonText}>Sign out</Text>
-          </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => { void logout(); }}
+              style={styles.navButton}
+            >
+              <Text style={styles.navButtonText}>Sign out</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.searchRow}>
@@ -43,7 +64,12 @@ export function Home() {
         </View>
       </View>
 
-      <Text style={styles.placeholder}>Cards will go here</Text>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        <RoleAccessPanel actor={session.actor} />
+      </ScrollView>
     </View>
   );
 }
@@ -57,12 +83,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
-  navHeader: { alignItems: "center", flexDirection: "row", gap: 8 },
-  brand: { color: "#111827", fontSize: 20, fontWeight: "700" },
+  navHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  navActions: {
+    flexDirection: "row",
+    flexShrink: 1,
+    flexWrap: "wrap",
+    gap: 8,
+    justifyContent: "flex-end",
+  },
+  brand: { color: "#111827", flexShrink: 1, fontSize: 20, fontWeight: "700", marginEnd: 12 },
   navButton: { backgroundColor: "#E5E7EB", borderRadius: 8, paddingHorizontal: 12, paddingVertical: 8 },
   navButtonText: { color: "#111827", fontSize: 14, fontWeight: "600" },
-  searchRow: { alignItems: "flex-end", flexDirection: "row", gap: 12, marginTop: 16 },
-  searchInput: { flex: 1 },
-  searchButton: { paddingBottom: 1 },
-  placeholder: { color: "#374151", fontSize: 16, marginTop: 24, textAlign: "center" },
+  searchRow: { gap: 12, marginTop: 16 },
+  searchInput: { minWidth: 0 },
+  searchButton: { alignSelf: "stretch" },
+  content: { flexGrow: 1, paddingBottom: 24 },
 });
