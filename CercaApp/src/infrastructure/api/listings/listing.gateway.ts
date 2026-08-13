@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { ListingRepository, ListListingParams, ListListingsResult } from "@/application/listings/ports/listing.repository";
-import { httpClient } from "./http-client";
-import { moneySchema } from "./schemas/money.schema";
+import { httpClient } from "../http-client";
+import { moneySchema } from "../schemas/money.schema";
 
 
 const listingSchema = z.object({

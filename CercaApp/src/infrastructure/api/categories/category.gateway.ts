@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import type { CategoryRepository } from '@/application/categories/ports/category.repository';
 
-import { httpClient } from './http-client';
+import { httpClient } from '../http-client';
 
 const categorySchema = z.object({
   id: z.string().min(1),

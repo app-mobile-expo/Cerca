@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { BookingRepository } from '@/application/bookings/ports/booking.repository';
 import type { Booking, BookingId, ListingId } from '@/domain/bookings/booking';
 
-import { httpClient } from './http-client';
+import { httpClient } from '../http-client';
 
 // Espejo exacto de BookingStatus (unión discriminada) para validar lo que manda el backend antes de confiar en ello
 const bookingStatusSchema = z.discriminatedUnion('kind', [

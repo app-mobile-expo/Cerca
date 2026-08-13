@@ -2,14 +2,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { ZodError } from 'zod';
 
 // http-client toca expo-secure-store y react-native; se mockea para probar solo la validación del gateway
-vi.mock('./http-client', () => ({
+vi.mock('../http-client', () => ({
   httpClient: {
     get: vi.fn(),
     post: vi.fn(),
   },
 }));
 
-const { httpClient } = await import('./http-client');
+const { httpClient } = await import('../http-client');
 const { BookingApiGateway } = await import('./booking.gateway');
 
 const validBookingResponse = {

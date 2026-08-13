@@ -4,7 +4,7 @@ import { createListListingUseCase } from '@/application/listings/use-cases/list-
 
 import type { ListListingParams } from '@/application/listings/ports/listing.repository';
 
-import { listingGateway } from '@/infrastructure/api/listing.gateway';
+import { listingGateway } from '@/infrastructure/api/listings/listing.gateway';
 
 import { listingKeys } from './listing-keys';
 

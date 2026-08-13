@@ -3,7 +3,7 @@ import { useRef } from 'react';
 
 import { createRequestBookingUseCase } from '@/application/bookings/use-cases/request-booking';
 import type { Booking, ListingId } from '@/domain/bookings/booking';
-import { bookingGateway } from '@/infrastructure/api/booking.gateway';
+import { bookingGateway } from '@/infrastructure/api/bookings/booking.gateway';
 import { generateIdempotencyKey } from '@/infrastructure/utils/idempotency-key';
 
 import { bookingKeys } from './booking-keys';

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { createListCategoriesUseCase } from '@/application/categories/use-cases/list-categories';
-import { categoryGateway } from '@/infrastructure/api/category.gateway';
+import { categoryGateway } from '@/infrastructure/api/categories/category.gateway';
 
 import { categoryKeys } from './category-keys';
 

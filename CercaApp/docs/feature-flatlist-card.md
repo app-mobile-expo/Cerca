@@ -9,6 +9,12 @@ Dos GET nuevos, cada uno como vertical independiente en Clean Architecture (doma
 
 Punto de partida: Tomy dejó 4 archivos stub en `origin/feature/flatlist-card` marcando la capa de presentación de listings (`ListingCard.tsx`, `ListingList.tsx`, `useListing.ts`, `ListingScreen.tsx`), cada uno con `export const test = () => {};`. Esta rama se creó desde `develop` ya sincronizado (ver más abajo) y se trajeron esos 4 archivos tal cual.
 
+## Reorganización de `src/infrastructure/api/` (carpeta por módulo)
+
+`booking.gateway.ts`/`review.gateway.ts` estaban sueltos, planos, directo en `infrastructure/api/`, mientras que `auth/`, `profile/` y `schemas/` ya vivían en su propia carpeta — inconsistente, y el mismo problema se repetía con los `listing.gateway.ts`/`category.gateway.ts` que acabábamos de crear siguiendo (sin querer) ese patrón viejo. Se movieron los 4 (+2 archivos `.test.ts` de bookings/reviews) a `infrastructure/api/{bookings,reviews,listings,categories}/`, y se actualizaron los imports relativos internos y los 8 archivos externos que los importaban por ruta absoluta (`@/infrastructure/api/...`). Verificado con `tsc --noEmit` que no quedó ninguna ruta rota (los únicos errores restantes en esos archivos son los huecos de dependencias pre-existentes: `vitest`, `react-i18next`, etc., ya documentados arriba, no causados por este movimiento).
+
+**Inconsistencia que queda anotada, no resuelta:** `http-client.ts`/`api-error.ts` (planos, usados por bookings/reviews/listings/categories) y `http/httpClient.ts`/`http/ApiError.ts` (en carpeta, usados por auth/profile) son **dos implementaciones distintas del mismo concepto**, no la misma cosa en dos rutas. Unificarlas es un cambio más grande que toca auth (código sensible, ya en producción) — fuera de alcance de "organizar en carpetas", queda para una pasada aparte si se decide.
+
 ## Estado de `develop` al crear la rama
 
 `develop` local y `origin/develop` habían divergido (5 commits propios — merges de US-05 bookings y US-06 reviews — vs. 1 commit propio de origin — merge de `feature/homeScreem-integration`, PR #11). Se resolvió con un `git merge origin/develop` limpio, sin conflictos (archivos afectados: `Home.tsx`, `ProfileContent.tsx`, `AppNavigator.tsx`, `HomeScreen.tsx`, `ProfileScreen.tsx`, `SearchScreen.tsx`, `navigation.d.ts`). `feature/flatlist-card` parte de ese `develop` ya al día.

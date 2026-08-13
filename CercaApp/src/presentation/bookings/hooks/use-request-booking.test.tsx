@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Booking } from '@/domain/bookings/booking';
 
 // El gateway real toca expo-secure-store/react-native; se mockea para probar el hook de forma aislada
-vi.mock('@/infrastructure/api/booking.gateway', () => ({
+vi.mock('@/infrastructure/api/bookings/booking.gateway', () => ({
   bookingGateway: {
     requestBooking: vi.fn(),
     getBooking: vi.fn(),
@@ -14,7 +14,7 @@ vi.mock('@/infrastructure/api/booking.gateway', () => ({
   },
 }));
 
-const { bookingGateway } = await import('@/infrastructure/api/booking.gateway');
+const { bookingGateway } = await import('@/infrastructure/api/bookings/booking.gateway');
 const { useRequestBooking } = await import('./use-request-booking');
 const { bookingKeys } = await import('./booking-keys');
 
