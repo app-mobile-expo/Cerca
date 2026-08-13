@@ -7,13 +7,13 @@ import type { Booking } from '@/domain/bookings/booking';
 import type { Review } from '@/domain/reviews/review';
 
 // El gateway real toca expo-secure-store/react-native; se mockea para probar el hook de forma aislada
-vi.mock('@/infrastructure/api/review.gateway', () => ({
+vi.mock('@/infrastructure/api/reviews/review.gateway', () => ({
   reviewGateway: {
     submitReview: vi.fn(),
   },
 }));
 
-const { reviewGateway } = await import('@/infrastructure/api/review.gateway');
+const { reviewGateway } = await import('@/infrastructure/api/reviews/review.gateway');
 const { useSubmitReview } = await import('./use-submit-review');
 const { bookingKeys } = await import('@/presentation/bookings/hooks/booking-keys');
 

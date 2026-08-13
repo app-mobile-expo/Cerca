@@ -27,7 +27,12 @@
     "mine": "My listings",
     "create": "Publish service",
     "minePending": "This feature will be developed in the listing stories.",
-    "createPending": "The four-step form will be developed in US-03."
+    "createPending": "The four-step form will be developed in US-03.",
+    "browse": {
+      "title": "Services near you",
+      "empty": "We couldn't find any listings in this area.",
+      "error": "We couldn't load listings."
+    }
   },
   "bookings": {
     "request": {

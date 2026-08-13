@@ -4,7 +4,7 @@ import type { ReviewRepository, SubmitReviewInput } from '@/application/reviews/
 import type { BookingId } from '@/domain/bookings/booking';
 import type { Review } from '@/domain/reviews/review';
 
-import { httpClient } from './http-client';
+import { httpClient } from '../http-client';
 
 // Espejo exacto de la entidad Review del dominio, para validar lo que manda el backend antes de confiar en ello
 const reviewSchema = z.object({

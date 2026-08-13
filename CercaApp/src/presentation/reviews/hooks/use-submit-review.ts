@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { createSubmitReviewUseCase } from '@/application/reviews/use-cases/submit-review';
 import type { Booking } from '@/domain/bookings/booking';
 import type { Review } from '@/domain/reviews/review';
-import { reviewGateway } from '@/infrastructure/api/review.gateway';
+import { reviewGateway } from '@/infrastructure/api/reviews/review.gateway';
 import { generateIdempotencyKey } from '@/infrastructure/utils/idempotency-key';
 import { bookingKeys } from '@/presentation/bookings/hooks/booking-keys';
 

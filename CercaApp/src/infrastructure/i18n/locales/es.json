@@ -27,7 +27,12 @@
     "mine": "Mis anuncios",
     "create": "Publicar servicio",
     "minePending": "Esta funcionalidad se desarrollará en las historias de anuncios.",
-    "createPending": "El formulario de cuatro pasos se desarrollará en la US-03."
+    "createPending": "El formulario de cuatro pasos se desarrollará en la US-03.",
+    "browse": {
+      "title": "Servicios cerca de ti",
+      "empty": "No encontramos anuncios en esta zona.",
+      "error": "No pudimos cargar los anuncios."
+    }
   },
   "bookings": {
     "request": {

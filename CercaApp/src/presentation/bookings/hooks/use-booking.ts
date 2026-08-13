@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { createGetBookingUseCase } from '@/application/bookings/use-cases/get-booking';
 import type { BookingId } from '@/domain/bookings/booking';
-import { bookingGateway } from '@/infrastructure/api/booking.gateway';
+import { bookingGateway } from '@/infrastructure/api/bookings/booking.gateway';
 
 import { bookingKeys } from './booking-keys';
 
